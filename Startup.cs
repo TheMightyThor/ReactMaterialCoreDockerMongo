@@ -11,8 +11,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Newtonsoft.Json;
 
-namespace FinancePoc
+namespace ReactMaterial
 {
     public class Startup
     {
@@ -29,9 +30,10 @@ namespace FinancePoc
             services.AddSingleton<IRepository, Repository>();
             services.AddSingleton<ICreditCheck, CreditCheck>();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            
             services.AddSpaStaticFiles(c =>
             {
-                c.RootPath = "ClientApp/dist";
+                c.RootPath = "front/src/assets";
             });
         }
 
@@ -60,12 +62,13 @@ namespace FinancePoc
                 // To learn more about options for serving an Angular SPA from ASP.NET Core,
                 // see https://go.microsoft.com/fwlink/?linkid=864501
         
-                spa.Options.SourcePath = "ClientApp";
-        
-                if (env.IsDevelopment())
-                {
-                    spa.UseAngularCliServer(npmScript: "start");
-                }
+                spa.Options.SourcePath = "front";
+                spa.UseProxyToSpaDevelopmentServer("http://localhost:3000");
+                // if (env.IsDevelopment())
+                // {
+                //     spa.UseAngularCliServer(npmScript: "start");
+                // }
+                // spa.UseAngularCliServer(npmScript: "start");
             });
         }
     }

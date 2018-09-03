@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 
 [Produces("application/json")]
 [Route("api/[controller]")]
@@ -23,14 +24,17 @@ public class UserController : ControllerBase
         return _repository.getUser(userName, password);
     }
     [HttpPost]
-    [Consumes("application/x-www-form-urlencoded")]
-    public string Post(IFormCollection form)
+    public string Post(User newUser)
     {
-        var userName = form["userName"];
-        var password = form["password"];
+        // User user = JsonConvert.DeserializeObject<User>(newUser,
+        //                     new JsonSerializerSettings { 
+        //                         NullValueHandling = NullValueHandling.Ignore,
+        //                         MissingMemberHandling = MissingMemberHandling.Ignore
+        //                     });
+
         var limit = _creditCheck.checkCreditAndCalculateLimit();
-        _repository.createUser(userName, password, limit);
-        return limit.ToString();
+        var userId = _repository.createUser(newUser, limit);
+        return userId;
     }
     [HttpGet]
     [Route("users")]

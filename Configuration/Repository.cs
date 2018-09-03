@@ -11,7 +11,7 @@ using System.Security.Cryptography;
 
 public interface IRepository{
     User getUser(string userName, string passowrd);
-    void createUser(string userName, string password, decimal limit);
+    string createUser(User newUser, decimal limit);
     List<User> getUsers();
 
 }
@@ -24,26 +24,28 @@ public class Repository : IRepository
     private IMongoDatabase _db {get; set;}
     private void getConnected(){
         var client = new MongoClient(connectionString);
-        _db = client.GetDatabase("commandcenter");
+        _db = client.GetDatabase("IdeaFinancial");
 
     }
-    public void createUser(string userName, string password, decimal limit)
+    public string createUser(User newUser, decimal limit)
     {
-        var existingUser = _db.GetCollection<User>("user").Find(u => u.UserName == userName).First();
+        var existingUser = _db.GetCollection<User>("user").Find(u => u.UserName == newUser.UserName).FirstOrDefault();
         if(existingUser == null)
         {
-            var hashedPw = hashPassword(password);
-            var user = new User{
-                UserName = userName,
-                Password = hashedPw,
-                LineOfCredit = new LineOfCredit(){
+            var hashedPw = hashPassword(newUser.Password);
+           
+            var lineOfCredit = new LineOfCredit(){
                     Limit = limit,
-                    Balance = 0,
-                }
+                    Balance = 0
             };
-            _db.GetCollection<User>("user").InsertOne(user);
+            newUser.LineOfCredit = lineOfCredit;
+            _db.GetCollection<User>("user").InsertOne(newUser);
+            return newUser.ID.ToString();
         }
-
+        else
+        {
+            return existingUser.ID.ToString();
+        }
     }
     public User getUser(string userName, string passowrd)
     {

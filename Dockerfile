@@ -1,3 +1,4 @@
+
 FROM microsoft/dotnet:sdk AS build-env
 
 WORKDIR /app
@@ -10,12 +11,18 @@ RUN dotnet restore
 COPY . ./
 RUN dotnet publish -c Release -o out
 
-# Build runtime image
-FROM microsoft/dotnet:aspnetcore-runtime
+
+
 WORKDIR /app
 COPY --from=build-env /app/out .
-ENV ASPNETCORE_URLS https://+:5001;http://+:5000
-ENV ASPNETCORE_ENVIORNMENT Development
+ENV ASPNETCORE_URLS=http://+:8080 \
+    ASPNETCORE_Enviornment=Development \
+    DOTNET_RUNNING_IN_CONTAINER=true \
+    # Enable correct mode for dotnet watch (only mode supported in a container)
+    DOTNET_USE_POLLING_FILE_WATCHER=true \
+    # Skip extraction of XML docs - generally not useful within an image/container - helps perfomance
+    NUGET_XMLDOC_MODE=skip
+
 EXPOSE 5001
 EXPOSE 5000
-ENTRYPOINT ["dotnet", "FinancePoc.dll"]
+ENTRYPOINT ["dotnet", "ReactMaterial.dll"]

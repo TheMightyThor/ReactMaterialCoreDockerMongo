@@ -7,7 +7,7 @@
             "type": "process",
             "args": [
                 "build",
-                "${workspaceFolder}/FinancePoc.csproj"
+                "${workspaceFolder}/ReactMaterial.csproj"
             ],
             "problemMatcher": "$msCompile"
         }
