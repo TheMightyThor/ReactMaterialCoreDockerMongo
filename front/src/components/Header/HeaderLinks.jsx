@@ -25,7 +25,7 @@ function HeaderLinks({ ...props }) {
       <ListItem className={classes.listItem}>
         <CustomDropdown
           noLiPadding
-          buttonText="Components"
+          buttonText="Menu"
           buttonProps={{
             className: classes.navLink,
             color: "transparent"
@@ -33,14 +33,21 @@ function HeaderLinks({ ...props }) {
           buttonIcon={Apps}
           dropdownList={[
             <Link to="/" className={classes.dropdownLink}>
-              All components
+            Home
+          </Link>,
+            <Link to="/login-page" className={classes.dropdownLink}>
+              Log In
             </Link>,
+              <Link to="/profile-page" className={classes.dropdownLink}>
+              Profile
+            </Link>,
+     
             <a
               href="https://creativetimofficial.github.io/material-kit-react/#/documentation"
               target="_blank"
               className={classes.dropdownLink}
             >
-              Documentation
+              Creative Tim Docs
             </a>
           ]}
         />
@@ -64,18 +71,18 @@ function HeaderLinks({ ...props }) {
       </ListItem>
       <ListItem className={classes.listItem}>
         <Tooltip
-          id="instagram-linkedIn"
-          title="Find me on linkedIn"
+          id="instagram-github"
+          title="Git Hub Code"
           placement={window.innerWidth > 959 ? "top" : "left"}
           classes={{ tooltip: classes.tooltip }}
         >
           <Button
-            href="https://www.linkedin.com/in/andrew-theobald-01193261/"
+            href="https://github.com/TheMightyThor/ReactMaterialCoreDockerMongo/"
             target="_blank"
             color="transparent"
             className={classes.navLink}
           >
-            <i className={classes.socialIcons + " fab fa-linkedin-in"} />
+            <i className={classes.socialIcons + " fab fa-github"} />
           </Button>
         </Tooltip>
       </ListItem>

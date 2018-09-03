@@ -36,7 +36,7 @@ class Components extends React.Component {
     return (
       <div>
         <Header
-          brand="Material Kit React"
+          brand="Git Hub: TheMightyThor"
           rightLinks={<HeaderLinks />}
           fixed
           color="transparent"
@@ -51,9 +51,9 @@ class Components extends React.Component {
             <GridContainer>
               <GridItem>
                 <div className={classes.brand}>
-                  <h1 className={classes.title}>Material Kit React.</h1>
+                  <h1 className={classes.title}>React Material .Net Core Docker Mongo.</h1>
                   <h3 className={classes.subtitle}>
-                    A Badass Material-UI Kit based on Material Design.
+                    A proof of concept based on Creative Time Material React Template.
                   </h3>
                 </div>
               </GridItem>
@@ -61,7 +61,7 @@ class Components extends React.Component {
           </div>
         </Parallax>
 
-        <div className={classNames(classes.main, classes.mainRaised)}>
+        {/* <div className={classNames(classes.main, classes.mainRaised)}>
           <SectionBasics />
           <SectionNavbars />
           <SectionTabs />
@@ -81,7 +81,7 @@ class Components extends React.Component {
           </GridItem>
           <SectionExamples />
           <SectionDownload />
-        </div>
+        </div> */}
         <Footer />
       </div>
     );

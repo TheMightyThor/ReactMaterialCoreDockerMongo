@@ -17,7 +17,7 @@ import HeaderLinks from "components/Header/HeaderLinks.jsx";
 import NavPills from "components/NavPills/NavPills.jsx";
 import Parallax from "components/Parallax/Parallax.jsx";
 
-import profile from "assets/img/faces/christian.jpg";
+import profile from "assets/img/faces/me.jpeg";
 
 import studio1 from "assets/img/examples/studio-1.jpg";
 import studio2 from "assets/img/examples/studio-2.jpg";
@@ -45,7 +45,7 @@ class ProfilePage extends React.Component {
       <div>
         <Header
           color="transparent"
-          brand="Material Kit React"
+          brand=""
           rightLinks={<HeaderLinks />}
           fixed
           changeColorOnScroll={{
@@ -65,8 +65,8 @@ class ProfilePage extends React.Component {
                       <img src={profile} alt="..." className={imageClasses} />
                     </div>
                     <div className={classes.name}>
-                      <h3 className={classes.title}>Christian Louboutin</h3>
-                      <h6>DESIGNER</h6>
+                      <h3 className={classes.title}>Andrew Theobald</h3>
+                      <h6>Software Developer</h6>
                       <Button justIcon link className={classes.margin5}>
                         <i className={"fab fa-twitter"} />
                       </Button>
