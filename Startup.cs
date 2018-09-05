@@ -30,7 +30,7 @@ namespace ReactMaterial
             services.AddSingleton<IRepository, Repository>();
             services.AddSingleton<ICreditCheck, CreditCheck>();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-            
+            services.Configure<DbConfig>(Configuration.GetSection("DbConfig"));
             services.AddSpaStaticFiles(c =>
             {
                 c.RootPath = "front/src/assets";
@@ -48,7 +48,7 @@ namespace ReactMaterial
             {
                 app.UseHsts();
             }
-
+            
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
@@ -64,11 +64,7 @@ namespace ReactMaterial
         
                 spa.Options.SourcePath = "front";
                 spa.UseProxyToSpaDevelopmentServer("http://localhost:3000");
-                // if (env.IsDevelopment())
-                // {
-                //     spa.UseAngularCliServer(npmScript: "start");
-                // }
-                // spa.UseAngularCliServer(npmScript: "start");
+
             });
         }
     }

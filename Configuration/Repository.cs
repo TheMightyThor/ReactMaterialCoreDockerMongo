@@ -8,23 +8,31 @@ using MongoDB.Driver;
 using MongoDB.Bson;
 using System.Text;
 using System.Security.Cryptography;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
 
 public interface IRepository{
     User getUser(string userName, string passowrd);
     string createUser(User newUser, decimal limit);
     List<User> getUsers();
+    List<Stock> getStocks();
 
 }
 public class Repository : IRepository
 {
-    public Repository(){
+    private readonly string connectionString;
+    private readonly string database;
+    public Repository(IConfiguration config){
+        connectionString = config.GetSection("DbConfig").GetSection("connectionString").Value.ToString();
+        database = config.GetSection("DbConfig").GetSection("dbName").Value.ToString();
         getConnected();
     }
-    private static readonly string connectionString = "mongodb://localhost:27017";
+    
     private IMongoDatabase _db {get; set;}
     private void getConnected(){
+        
         var client = new MongoClient(connectionString);
-        _db = client.GetDatabase("IdeaFinancial");
+        _db = client.GetDatabase(database);
 
     }
     public string createUser(User newUser, decimal limit)
@@ -74,7 +82,12 @@ public class Repository : IRepository
 
         return sb.ToString();
     }
-
+    public List<Stock> getStocks(){
+        var b = Builders<Stock>.Projection.Slice(s => s.quotes,0, 1);
+        var stocks = _db.GetCollection<Stock>("stocks").Find(_=> true).Project<Stock>(b)
+        .ToList();
+        return stocks;
+    }
 
     
 }
